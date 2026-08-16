@@ -1,10 +1,243 @@
 <!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Convite Alice Maria</title><link rel="stylesheet" href="assets/css/convite.css"></head>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<!-- Não solicitar indexação pelos mecanismos de busca -->
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="googlebot" content="noindex,nofollow,noarchive">
+
+<title>Convite Alice Maria</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  padding:0;
+  width:100%;
+  min-height:100%;
+  background:#fff;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  overflow-x:hidden;
+}
+
+/* Tela de senha */
+#senhaTela{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:25px;
+  background:linear-gradient(135deg,#fff7fb,#ffe8f2,#fff);
+}
+
+.senha-caixa{
+  width:min(420px,92vw);
+  padding:35px 25px 30px;
+  text-align:center;
+  background:#fff;
+  border-radius:28px;
+  box-shadow:0 10px 40px rgba(0,0,0,.15);
+}
+
+.senha-caixa h1{
+  margin:0 0 8px;
+  color:#ec4d91;
+  font-size:30px;
+}
+
+.senha-caixa h2{
+  margin:0 0 22px;
+  color:#70465a;
+  font-size:20px;
+  font-weight:500;
+}
+
+.senha-caixa p{
+  margin:0 0 18px;
+  color:#777;
+  font-size:16px;
+}
+
+#senha{
+  width:100%;
+  padding:15px;
+  border:2px solid #f4b4cf;
+  border-radius:14px;
+  text-align:center;
+  font-size:22px;
+  letter-spacing:5px;
+  outline:none;
+}
+
+#senha:focus{
+  border-color:#ec4d91;
+}
+
+#entrar{
+  width:100%;
+  margin-top:15px;
+  padding:15px;
+  border:0;
+  border-radius:14px;
+  background:#ec4d91;
+  color:white;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+#erro{
+  display:none;
+  margin-top:14px;
+  color:#d93667;
+  font-size:14px;
+}
+
+/* Convite */
+#convite{
+  display:none;
+  position:relative;
+  width:100%;
+}
+
+#convite img{
+  display:block;
+  width:100%;
+  height:auto;
+}
+
+.botao-comecar{
+  position:absolute;
+  left:7.5%;
+  top:84.8%;
+  width:85%;
+  height:12%;
+  display:block;
+  cursor:pointer;
+  z-index:10;
+}
+
+.music-toggle{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:100;
+  width:48px;
+  height:48px;
+  border:0;
+  border-radius:50%;
+  background:white;
+  box-shadow:0 3px 12px rgba(0,0,0,.2);
+  font-size:20px;
+  cursor:pointer;
+}
+</style>
+</head>
+
 <body>
-<div class="convite">
-<img src="assets/images/pagina1.png" alt="Convite Alice Maria — Página 1">
-<a class="hit" href="pagina2.html" aria-label="Começar" style="left:7.5%;top:84.8%;width:85%;height:12%;"></a>
+
+<!-- TELA DE SENHA -->
+<div id="senhaTela">
+  <div class="senha-caixa">
+    <h1>🌸 Alice Maria 🌸</h1>
+    <h2>1 aninho</h2>
+
+    <p>Digite a senha para entrar no convite:</p>
+
+    <input
+      id="senha"
+      type="password"
+      inputmode="numeric"
+      maxlength="4"
+      placeholder="••••"
+      autocomplete="off"
+    >
+
+    <button id="entrar" type="button">ENTRAR NO CONVITE 💕</button>
+
+    <div id="erro">Senha incorreta. Tente novamente. 💗</div>
+  </div>
 </div>
-<button class="music-toggle" aria-label="Música">🔇</button>
+
+<!-- CONVITE ORIGINAL -->
+<div id="convite">
+
+  <img
+    src="assets/images/pagina1.png"
+    alt="Convite Alice Maria – Página 1"
+  >
+
+  <a
+    class="botao-comecar"
+    href="pagina2.html"
+    aria-label="Começar"
+  ></a>
+
+</div>
+
+<!-- MÚSICA -->
+<button
+  class="music-toggle"
+  aria-label="Música"
+  title="Música"
+>🔇</button>
+
 <script src="assets/js/music.js"></script>
-</body></html>
+
+<script>
+const senhaCorreta = "1209";
+
+const senhaTela = document.getElementById("senhaTela");
+const convite = document.getElementById("convite");
+const senha = document.getElementById("senha");
+const entrar = document.getElementById("entrar");
+const erro = document.getElementById("erro");
+
+function liberarConvite(){
+
+  if(senha.value === senhaCorreta){
+
+    senhaTela.style.display = "none";
+    convite.style.display = "block";
+
+    sessionStorage.setItem("aliceConviteLiberado","sim");
+
+  }else{
+
+    erro.style.display = "block";
+    senha.value = "";
+    senha.focus();
+
+  }
+}
+
+entrar.addEventListener("click", liberarConvite);
+
+senha.addEventListener("keydown", function(event){
+
+  if(event.key === "Enter"){
+    liberarConvite();
+  }
+
+});
+
+/* Se a pessoa já digitou a senha nesta sessão,
+   não pede novamente ao voltar para o convite */
+if(sessionStorage.getItem("aliceConviteLiberado") === "sim"){
+  senhaTela.style.display = "none";
+  convite.style.display = "block";
+}
+</script>
+
+</body>
+</html>
