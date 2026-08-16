@@ -1,0 +1,10 @@
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#fff}
+body{font-family:Arial,sans-serif;overflow-x:hidden}
+.convite{position:relative;width:100%;max-width:1684px;margin:0 auto;line-height:0}
+.convite img{display:block;width:100%;height:auto}
+.hit{position:absolute;display:block;z-index:10;background:transparent;cursor:pointer}
+.music-toggle{position:fixed;right:14px;bottom:14px;z-index:100;width:44px;height:44px;border:0;border-radius:50%;background:rgba(255,105,160,.9);color:#fff;font-size:20px;line-height:44px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.2);cursor:pointer}
+.music-toggle.off{background:rgba(120,120,120,.65)}
+.external-placeholder{cursor:pointer}
+@media (min-width:1685px){.convite{width:1684px}}
